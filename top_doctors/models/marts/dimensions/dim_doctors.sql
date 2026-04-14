@@ -3,4 +3,5 @@ SELECT
     specialty,
     clinic_id,
     created_at
-FROM {{ ref('stg_doctors') }}
+FROM 
+    {{ ref('stg_doctors') }}
