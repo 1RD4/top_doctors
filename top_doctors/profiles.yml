@@ -1,0 +1,10 @@
+top_doctors:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: project-6fb1c0a9-07d6-4c4b-870
+      dataset: top_doctors
+      location: EU
+      threads: 1

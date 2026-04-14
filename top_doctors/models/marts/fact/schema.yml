@@ -1,0 +1,55 @@
+version: 2
+
+models:
+
+  - name: fct_appointments
+    description: Fact table at appointment grain. Each row represents a unique appointment
+      between a patient and a doctor. Partitioned by scheduled_at to improve historical data 
+      searches and clustered by patient_id, doctor_id and status, since this fields could be 
+      the most used in queries
+
+    columns:
+
+      - name: appointment_id
+        description: Primary key of the fact table (one row per appointment).
+        data_tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        description: Foreign key to dim_patients.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_patients')
+                field: patient_id
+
+      - name: doctor_id
+        description: Foreign key to dim_doctors.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_doctors')
+                field: doctor_id
+
+      - name: scheduled_at
+        description: Date when the appointment is scheduled.
+
+      - name: created_at
+        description: Date when the appointment was created.
+
+      - name: status
+        description: Current status of the appointment
+        data_tests:
+        - accepted_values:
+            arguments:
+              values: ['booked', 'cancelled', 'completed', 'no_show']
+
+      - name: consultation_type
+        description: Type of consultation
+        data_tests: 
+        - accepted_values:
+            arguments:
+              values: ['in_person','online']

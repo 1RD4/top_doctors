@@ -1,0 +1,38 @@
+
+version: 2
+
+models:
+  - name: int_appointments_clean
+    description: Cleaned and deduplicated appointments table containing one record per appointment_id,
+      with standardized status and consultation type values.
+    columns:
+    - name: appointment_id
+      description: Unique identifier for each appointment.
+      data_tests:
+        - unique
+        - not_null
+
+    - name: patient_id
+      description: Unique identifier of the patient associated with the appointment. References patient table.
+      
+
+    - name: doctor_id	
+      description: Unique identifier of the doctor assigned to the appointment. References doctor table.
+      
+
+    - name: scheduled_at	
+      description: Date when the appointment is scheduled to occur.
+      data_type: date
+
+    - name: created_at
+      description: Date when the appointment record was created in the system.
+      data_type: date
+
+    - name: status
+      description: Standardized status of the appointment. Represents the lifecycle state
+          of the appointment in the system.
+      data_type: string
+
+    - name: consultation_type
+      description: Type of consultation for the appointment, indicating whether it is in-person or online.
+      data_type: string

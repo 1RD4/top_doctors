@@ -1,0 +1,61 @@
+version: 2
+
+models:
+
+#------------------------------------------------------------
+# dim_doctors
+#------------------------------------------------------------
+
+  - name: dim_doctors
+    description: Dimension table at doctor grain. Each row represents a unique doctor,
+      containing doctor-level information, including identifiers,
+      specialty, clinic association, and creation date. Data is sourced
+      from the stg_doctors table and lightly standardized.
+
+    columns:
+
+      - name: doctor_id
+        description: Unique identifier for each doctor.
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+
+      - name: specialty
+        description: Medical specialty of the doctor (e.g., cardiology, dermatology).
+        data_type: string
+
+      - name: clinic_id
+        description: Identifier of the clinic where the doctor practices.
+        data_type: string
+
+      - name: created_at
+        description: Date when the doctor record was created in the system.
+        data_type: date
+
+#------------------------------------------------------------
+# dim_patients
+#------------------------------------------------------------
+
+  - name: dim_patients
+    description: Dimension table at patient grain. Each row represents a unique patient,
+      containing patient-level information, including unique identifiers,
+      account creation date, and country of origin. Data is sourced from the stg_patients 
+      table and lightly standardized.
+
+    columns:
+
+      - name: patient_id
+        description: Unique identifier for each patient.
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+
+      - name: created_at
+        description: Date when the patient account was created in the system.
+        data_type: date
+
+      - name: country_id
+        description: Country associated with the patient, typically representing residence or registration location.
+        data_type: string

@@ -1,0 +1,121 @@
+
+version: 2
+
+models:
+
+#------------------------------------------------------------
+# stg_appointments
+#------------------------------------------------------------
+
+  - name: stg_appointments
+    description: Staging table containing information from appointments. Might contain duplicated appointments
+      and not standardized values for some fields
+    columns:
+    - name: appointment_id
+      description: Unique identifier for each appointment. Not deduplicated at this stage
+      data_type: string
+      data_tests:
+        - not_null
+
+    - name: patient_id
+      description: Unique identifier of the patient associated with the appointment. References patient table.
+      data_type: string
+      data_tests:
+        - not_null
+
+    - name: doctor_id	
+      description: Unique identifier of the doctor assigned to the appointment. References doctor table.
+      data_type: string
+      data_tests:
+        - not_null
+
+    - name: scheduled_at	
+      description: Date when the appointment is scheduled to occur.
+      data_type: date
+      data_tests:
+        - not_null
+
+    - name: created_at
+      description: Date when the appointment record was created in the system.
+      data_type: date
+      data_tests:
+        - not_null
+
+    - name: status
+      description: Status of the appointment. Represents the lifecycle state
+          of the appointment in the system. Not normalized at this stage
+      data_type: string
+      data_tests:
+        - not_null
+
+    - name: consultation_type
+      description: Type of consultation for the appointment, indicating whether it is in-person or online.
+      data_type: string
+      data_tests: 
+        - not_null
+
+#------------------------------------------------------------
+# stg_doctors
+#------------------------------------------------------------
+
+  - name: stg_doctors
+    description: Staging table containing doctor-level information, including identifiers,
+      specialty, clinic association, and creation timestamp. Data is sourced
+      from the raw doctors table and lightly standardized.
+
+    columns:
+
+      - name: doctor_id
+        description: Unique identifier for each doctor.
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+
+      - name: specialty
+        description: Medical specialty of the doctor (e.g., cardiology, dermatology).
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: clinic_id
+        description: Identifier of the clinic where the doctor practices.
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: created_at
+        description: Date when the doctor record was created in the system.
+        data_type: date
+        data_tests:
+          - not_null
+
+#------------------------------------------------------------
+# stg_patients
+#------------------------------------------------------------
+
+  - name: stg_patients
+    description: Staging table containing patient-level information, including unique identifiers,
+      account creation timestamp, and country of origin. Data is sourced from the raw
+      patients table and lightly standardized.
+
+    columns:
+
+      - name: patient_id
+        description: Unique identifier for each patient.
+        data_type: string
+        data_tests:
+          - not_null
+          - unique
+
+      - name: created_at
+        description: Date when the patient account was created in the system.
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: country_id
+        description: Country associated with the patient, typically representing residence or registration location.
+        data_type: string
+        data_tests:
+          - not_null
