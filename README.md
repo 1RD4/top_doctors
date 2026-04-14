@@ -1,6 +1,6 @@
 # Analytics Engineer Test
 
-This repository contains a DBT project, some queries and screenshots of visualizations built by Adrián Flórez Santalla in order to apply for the Analytics Engineer vacant at Top Doctors
+This repository contains a DBT project and some queries  built by Adrián Flórez Santalla in order to apply for the Analytics Engineer vacant at Top Doctors
 
 ## Installation
 
